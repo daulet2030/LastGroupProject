@@ -140,7 +140,7 @@ public abstract class AbstractClass {
     //after this point need to be checked
 
     public static String getXpathForTitle(int num){
-        return "//div[@class='box']/text()["+num+"]";
+        return "//div[@class='box']";
     }
 
     public static String injectWrappedText(String xpath, WebDriver driver){
@@ -190,18 +190,16 @@ public abstract class AbstractClass {
 
     }
 
-    public void verifyOrderNumber( List<WebElement> expected, String element , String value){
-
-       getReferenceNumber(element);
-
-        for (int i = 0; i < expected.size(); i++) {
-            String expectedText = expected.get(i).getText();
-            if(expectedText.trim().equalsIgnoreCase(value)){
-                Assert.assertEquals(value,expectedText);
+    public void verifyOrderNumber( List<WebElement> elementList, String expectedText){
+        boolean found = false;
+        for (int i = 0; i < elementList.size(); i++) {
+            String actualText = elementList.get(i).getText();
+            if(actualText.trim().equalsIgnoreCase(expectedText)){
+                found = true;
+                break;
             }
         }
-
-
+        Assert.assertTrue(found, "The expected text was not found in the element list");
     }
 
     public void sleep(int num){

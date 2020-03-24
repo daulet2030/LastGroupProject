@@ -9,13 +9,13 @@ import org.openqa.selenium.WebDriver;
 public class orderHistorySteps {
 
     WebDriver driver;
-
+    String referenceNumber;
     orderHistoryPage order = new orderHistoryPage();
 
     @And("^Get the reference number from text$")
     public void getTheReferenceNumberFromText() {
 
-        order.getTheReferenceNumber();
+       referenceNumber = order.getTheReferenceNumber();
     }
 
     @Given("^Click on Tugba Aydin tab$")
@@ -31,9 +31,9 @@ public class orderHistorySteps {
 
     }
     @Then("^Confirm order reference number is same after click on my order button$")
-    public void confirm_order_reference_number_is_same_after_click_on_my_order_button(String value) throws Throwable {
+    public void confirm_order_reference_number_is_same_after_click_on_my_order_button() throws Throwable {
 
-        order.getTheColumnReferenceNum(value);
+        order.getTheColumnReferenceNum(referenceNumber);
 
     }
 

@@ -7,8 +7,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.Assert;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class orderHistoryPage extends AbstractClass{
 
@@ -37,16 +40,22 @@ public class orderHistoryPage extends AbstractClass{
 
     //to get the reference number in text
 
-    @FindBy(xpath = "//div[@class='box']/text()[11]")
-    private String referenceNum;
+//    @FindBy(xpath = "//div[@class='box']/text()[11]")
+//    private WebElement referenceNum;
     
-    public void getTheReferenceNumber(){
+    public String getTheReferenceNumber(){
 
         sleep(3);
 
-        String s = injectWrappedText(getXpathForTitle(11),driver);
+        WebElement element = driver.findElement(By.xpath(getXpathForTitle(11)));
 
-        System.out.println(driver.findElement(By.xpath("ca9c255d-bd62-4cba-8df0-fbf674aaa629")));
+        Pattern p = Pattern.compile("reference\\W+(\\w+)");
+
+        Matcher m = p.matcher(element.getText());
+        Assert.assertTrue(m.find(), "Reference number not found!");
+        String referenceNumber = m.group(1);
+        System.out.println(referenceNumber);
+        return  referenceNumber;
     }
 
     //to get the column of reference list
@@ -58,7 +67,7 @@ public class orderHistoryPage extends AbstractClass{
 
     public void getTheColumnReferenceNum(String value){
 
-        verifyOrderNumber(firstColumnlist,referenceNum, value );
+        verifyOrderNumber(firstColumnlist,value );
 
 
 
